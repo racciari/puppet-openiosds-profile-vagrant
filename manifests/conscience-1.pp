@@ -8,4 +8,6 @@ openiosds::conscience {'conscience-1':
   port                  => '6000',
   conscience_url        => "${ipaddress_enp0s8}:6000",
   zookeeper_url         => "${ipaddress_enp0s8}:6011",
+  oioproxy_url          => "${ipaddress}:6012",
+  eventagent_url        => "tcp://${ipaddress}:6013",
 }
