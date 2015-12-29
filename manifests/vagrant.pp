@@ -82,22 +82,25 @@ openiosds::oioproxy {'oioproxy-1':
   port      => '6012',
 }
 openiosds::rawx {'rawx-1':
-  num       => '1',
-  ns        => 'OPENIO',
-  ipaddress => $ipaddr,
-  port      => "6008",
+  num                    => '1',
+  ns                     => 'OPENIO',
+  ipaddress              => $ipaddr,
+  port                   => '6008',
+  default_oioblobindexer => true,
 }
 openiosds::rawx {'rawx-2':
-  num       => '2',
-  ns        => 'OPENIO',
-  ipaddress => $ipaddr,
-  port      => "6009",
+  num                    => '2',
+  ns                     => 'OPENIO',
+  ipaddress              => $ipaddr,
+  port                   => '6009',
+  default_oioblobindexer => true,
 }
 openiosds::rawx {'rawx-3':
-  num       => '3',
-  ns        => 'OPENIO',
-  ipaddress => $ipaddr,
-  port      => '6010',
+  num                    => '3',
+  ns                     => 'OPENIO',
+  ipaddress              => $ipaddr,
+  port                   => '6010',
+  default_oioblobindexer => true,
 }
 openiosds::zookeeper {'zookeeper-1':
   num       => '1',
@@ -105,4 +108,22 @@ openiosds::zookeeper {'zookeeper-1':
   ipaddress => $ipaddr,
   port      => '6011',
   bootstrap => true,
+}
+openiosds::rdir {'rdir-1':
+  num       => '1',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6015',
+}
+openiosds::rdir {'rdir-2':
+  num       => '2',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6016',
+}
+openiosds::rdir {'rdir-3':
+  num       => '3',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6017',
 }
