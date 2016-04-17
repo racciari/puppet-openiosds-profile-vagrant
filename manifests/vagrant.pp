@@ -1,22 +1,27 @@
 if $ipaddress_enp0s8 { $ipaddr = $ipaddress_enp0s8 }
 else { $ipaddr = $ipaddress }
-openiosds::sdsagent {'sds-agent-0':
-}
+class {'openiosds':}
 openiosds::namespace {'OPENIO':
   ns             => 'OPENIO',
   conscience_url => "${ipaddr}:6000",
-  zookeeper_url  => "${ipaddr}:6011",
-  oioproxy_url   => "${ipaddr}:6012",
-  eventagent_url => "tcp://${ipaddr}:6013",
+  oioproxy_url   => "${ipaddr}:6006",
+  eventagent_url => "beanstalk://${ipaddr}:6008",
+  zookeeper_url  => "${ipaddr}:6005",
+}
+openiosds::zookeeper {'zookeeper-1':
+  num       => '1',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6005',
+  bootstrap => true,
 }
 openiosds::account {'account-1':
   num        => '1',
   ns         => 'OPENIO',
   ipaddress  => $ipaddr,
-  port       => '6014',
-  redis_default_install => true,
-  redis_host => '127.0.0.1',
-  redis_port => '6379',
+  port       => '6009',
+  redis_host => $ipaddr,
+  redis_port => '6011',
 }
 openiosds::conscience {'conscience-1':
   num                   => '1',
@@ -33,6 +38,18 @@ openiosds::meta0 {'meta0-1':
   ipaddress => $ipaddr,
   port      => '6001',
 }
+openiosds::meta0 {'meta0-2':
+  num       => '2',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6071',
+}
+openiosds::meta0 {'meta0-3':
+  num       => '3',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6081',
+}
 openiosds::meta1 {'meta1-1':
   num       => '1',
   ns        => 'OPENIO',
@@ -43,87 +60,105 @@ openiosds::meta1 {'meta1-2':
   num       => '2',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6003',
+  port      => '6072',
 }
 openiosds::meta1 {'meta1-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6004',
+  port      => '6082',
 }
 openiosds::meta2 {'meta2-1':
   num       => '1',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6005',
+  port      => '6003',
 }
 openiosds::meta2 {'meta2-2':
   num       => '2',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6006',
+  port      => '6073',
 }
 openiosds::meta2 {'meta2-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6007',
-}
-openiosds::oioeventagent {'oio-event-agent-1':
-  num       => '1',
-  ns        => 'OPENIO',
-  ipaddress => $ipaddr,
-  port      => '6013',
-}
-openiosds::oioproxy {'oioproxy-1':
-  num       => '1',
-  ns        => 'OPENIO',
-  ipaddress => '0.0.0.0',
-  port      => '6012',
+  port      => '6083',
 }
 openiosds::rawx {'rawx-1':
-  num                    => '1',
-  ns                     => 'OPENIO',
-  ipaddress              => $ipaddr,
-  port                   => '6008',
-  default_oioblobindexer => true,
-}
-openiosds::rawx {'rawx-2':
-  num                    => '2',
-  ns                     => 'OPENIO',
-  ipaddress              => $ipaddr,
-  port                   => '6009',
-  default_oioblobindexer => true,
-}
-openiosds::rawx {'rawx-3':
-  num                    => '3',
-  ns                     => 'OPENIO',
-  ipaddress              => $ipaddr,
-  port                   => '6010',
-  default_oioblobindexer => true,
-}
-openiosds::zookeeper {'zookeeper-1':
   num       => '1',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6011',
-  bootstrap => true,
+  port      => '6004',
+}
+openiosds::rawx {'rawx-2':
+  num       => '2',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6074',
+}
+openiosds::rawx {'rawx-3':
+  num       => '3',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6084',
+}
+openiosds::oioblobindexer {'oio-blob-indexer-rawx-1':
+  num => '1',
+  ns  => 'OPENIO',
+}
+openiosds::oioblobindexer {'oio-blob-indexer-rawx-2':
+  num => '2',
+  ns  => 'OPENIO',
+}
+openiosds::oioblobindexer {'oio-blob-indexer-rawx-3':
+  num => '3',
+  ns  => 'OPENIO',
 }
 openiosds::rdir {'rdir-1':
   num       => '1',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6015',
+  port      => '6010',
 }
 openiosds::rdir {'rdir-2':
   num       => '2',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6016',
+  port      => '6070',
 }
 openiosds::rdir {'rdir-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
-  port      => '6017',
+  port      => '6080',
+}
+openiosds::oioeventagent {'oio-event-agent-1':
+  num       => '1',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6008',
+}
+openiosds::oioproxy {'oioproxy-1':
+  num       => '1',
+  ns        => 'OPENIO',
+  ipaddress => '0.0.0.0',
+  port      => '6015',
+}
+openiosds::redis {'redis-0':
+  num       => '1',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6011',
+}
+openiosds::conscienceagent {'conscienceagent-1':
+  num => '1',
+  ns  => 'OPENIO',
+}
+openiosds::beanstalkd {'beanstalkd-1':
+  num       => '1',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6014',
 }
