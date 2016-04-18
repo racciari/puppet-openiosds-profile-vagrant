@@ -144,7 +144,7 @@ openiosds::oioproxy {'oioproxy-1':
   num       => '1',
   ns        => 'OPENIO',
   ipaddress => '0.0.0.0',
-  port      => '6015',
+  port      => '6006',
 }
 openiosds::redis {'redis-0':
   num       => '1',
