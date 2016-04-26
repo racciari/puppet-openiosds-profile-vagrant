@@ -26,7 +26,7 @@ openiosds::account {'account-1':
 openiosds::conscience {'conscience-1':
   num                   => '1',
   ns                    => 'OPENIO',
-  service_update_policy => 'meta2=KEEP|3|0|;meta1=REPLACE;sqlx=KEEP|1|1|',
+  service_update_policy => 'meta2=KEEP|3|1|;rdir=KEEP|1|1|user_is_a_service=1',
   storage_policy        => 'UNSAFETHREECOPIES',
   meta2_max_versions    => '0',
   ipaddress             => $ipaddr,
@@ -37,18 +37,21 @@ openiosds::meta0 {'meta0-1':
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6001',
+  location  => 'openio1',
 }
 openiosds::meta0 {'meta0-2':
   num       => '2',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6071',
+  location  => 'openio2',
 }
 openiosds::meta0 {'meta0-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6081',
+  location  => 'openio3',
 }
 openiosds::meta1 {'meta1-1':
   num       => '1',
@@ -61,48 +64,56 @@ openiosds::meta1 {'meta1-2':
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6072',
+  location  => 'openio2',
 }
 openiosds::meta1 {'meta1-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6082',
+  location  => 'openio3',
 }
 openiosds::meta2 {'meta2-1':
   num       => '1',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6003',
+  location  => 'openio1',
 }
 openiosds::meta2 {'meta2-2':
   num       => '2',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6073',
+  location  => 'openio2',
 }
 openiosds::meta2 {'meta2-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6083',
+  location  => 'openio3',
 }
 openiosds::rawx {'rawx-1':
   num       => '1',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6004',
+  location  => 'openio1',
 }
 openiosds::rawx {'rawx-2':
   num       => '2',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6074',
+  location  => 'openio2',
 }
 openiosds::rawx {'rawx-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6084',
+  location  => 'openio3',
 }
 openiosds::oioblobindexer {'oio-blob-indexer-rawx-1':
   num => '1',
@@ -121,18 +132,21 @@ openiosds::rdir {'rdir-1':
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6010',
+  location  => 'openio1',
 }
 openiosds::rdir {'rdir-2':
   num       => '2',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6070',
+  location  => 'openio2',
 }
 openiosds::rdir {'rdir-3':
   num       => '3',
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6080',
+  location  => 'openio3',
 }
 openiosds::oioeventagent {'oio-event-agent-1':
   num       => '1',
