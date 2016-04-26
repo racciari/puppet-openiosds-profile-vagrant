@@ -5,7 +5,7 @@ openiosds::namespace {'OPENIO':
   ns             => 'OPENIO',
   conscience_url => "${ipaddr}:6000",
   oioproxy_url   => "${ipaddr}:6006",
-  eventagent_url => "beanstalk://${ipaddr}:6008",
+  eventagent_url => "beanstalk://${ipaddr}:6014",
   zookeeper_url  => "${ipaddr}:6005",
 }
 openiosds::zookeeper {'zookeeper-1':
