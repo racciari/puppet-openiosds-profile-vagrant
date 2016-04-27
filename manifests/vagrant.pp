@@ -1,4 +1,4 @@
-if $ipaddress_enp0s8 { $ipaddr = $ipaddress_enp0s8 }
+if $ipaddress_enp0s9 { $ipaddr = $ipaddress_enp0s9 }
 else { $ipaddr = $ipaddress }
 class {'openiosds':}
 openiosds::namespace {'OPENIO':
