@@ -1,7 +1,7 @@
 if $ipaddress_enp0s9 { $ipaddr = $ipaddress_enp0s9 }
 else { $ipaddr = $ipaddress }
 openiosds::namespace {'OPENIO':
-  ns => 'OPENIO',
+  ns             => 'OPENIO',
   conscience_url => "VAGRANT_MAIN_VM:6000",
   zookeeper_url  => "VAGRANT_MAIN_VM:6005",
   oioproxy_url   => "VAGRANT_MAIN_VM:6006",
