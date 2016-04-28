@@ -1,4 +1,4 @@
-if $ipaddress_enp0s8 { $ipaddr = $ipaddress_enp0s8 }
+if $ipaddress_enp0s9 { $ipaddr = $ipaddress_enp0s9 }
 else { $ipaddr = $ipaddress }
 class { 'keystone':
   verbose        => True,
@@ -60,11 +60,11 @@ keystone_user_role { 'demo@demo':
   ensure => present
 }
 openiosds::namespace {'OPENIO':
-    ns => 'OPENIO',
+  ns => 'OPENIO',
 }
 openiosds::oioswift {'oioswift-1':
-  num => '1',
-  ns => 'OPENIO',
-  ipaddress => '0.0.0.0',
-  sds_proxy_url => 'http://VAGRANT_MAIN_VM:6012',
+  num           => '1',
+  ns            => 'OPENIO',
+  ipaddress     => '0.0.0.0',
+  sds_proxy_url => 'http://VAGRANT_MAIN_VM:6006',
 }
