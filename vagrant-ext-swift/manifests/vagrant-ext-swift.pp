@@ -1,18 +1,20 @@
 if $ipaddress_enp0s8 { $ipaddr = $ipaddress_enp0s8 }
 else { $ipaddr = $ipaddress }
+
+### Install and configure Keystone
 class { 'keystone':
   verbose        => True,
   admin_token    => 'KEYSTONE_ADMIN_UUID',
   database_connection => 'sqlite:////var/lib/keystone/keystone.db',
 }
 
-# Adds the admin credential to keystone.
+# Adds the admin credential to Keystone.
 class { 'keystone::roles::admin':
   email        => 'test@openio.io',
   password     => 'ADMIN_PASS',
 }
 
-# Installs the service user endpoint.
+# Installs the Keystone service user endpoints.
 class { 'keystone::endpoint':
   public_url   => "http://${ipaddr}:5000",
   admin_url    => "http://${ipaddress}:5000",
@@ -20,7 +22,7 @@ class { 'keystone::endpoint':
   region       => 'localhost-1',
 }
 
-# Swift
+# Configure the Swift service into Keystone
 keystone_user { 'swift':
   ensure  => present,
   enabled => True,
@@ -42,7 +44,7 @@ keystone_endpoint { 'localhost-1/openio-swift':
    internal_url => "http://${ipaddress}:6007/v1.0/AUTH_%(tenant_id)s",
 }
 
-# Demo account
+# Configure the `demo@demo` tenant and account into Keystone
 keystone_tenant { 'demo':
   ensure  => present,
   enabled => True,
@@ -59,6 +61,9 @@ keystone_user_role { 'demo@demo':
   roles  => ['admin','_member_'],
   ensure => present
 }
+
+# Install and configure the OpenIO Swift gateway
+class {'openiosds':}
 openiosds::namespace {'OPENIO':
   ns => 'OPENIO',
 }
