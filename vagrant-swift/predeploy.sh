@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install the RDO repository
-/usr/bin/yum -y install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-3.noarch.rpm
+/usr/bin/yum -y install centos-release-openstack-mitaka
 
 # Install required packages
 /usr/bin/yum -y install puppet memcached python-swiftclient
