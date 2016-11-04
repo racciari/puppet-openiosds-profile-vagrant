@@ -72,8 +72,6 @@ openiosds::namespace {'OPENIO':
 }
 openiosds::conscience {'conscience-0':
   ns                    => 'OPENIO',
-  service_update_policy => 'meta2=KEEP|1|1|;rdir=KEEP|1|1|user_is_a_service=1',
-  storage_policy        => 'SINGLE',
   meta2_max_versions    => '0',
   ipaddress             => $ipaddr,
 }
