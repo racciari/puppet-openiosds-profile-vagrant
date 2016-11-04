@@ -69,6 +69,7 @@ openiosds::namespace {'OPENIO':
   conscience_url => "${ipaddr}:6000",
   oioproxy_url   => "${ipaddr}:6006",
   eventagent_url => "beanstalk://${ipaddr}:6014",
+  ecd_url        => "${ipaddr}:6017",
 }
 openiosds::conscience {'conscience-0':
   ns                    => 'OPENIO',
@@ -126,4 +127,8 @@ openiosds::oioswift {'oioswift-0':
   ns            => 'OPENIO',
   ipaddress     => '0.0.0.0',
   sds_proxy_url => 'http://127.0.0.1:6006',
+}
+openiosds::ecd {'ecd-0':
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
 }
