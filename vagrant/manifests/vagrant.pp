@@ -7,6 +7,7 @@ openiosds::namespace {'OPENIO':
   oioproxy_url   => "${ipaddr}:6006",
   eventagent_url => "beanstalk://${ipaddr}:6014",
   zookeeper_url  => "${ipaddr}:6005",
+  ecd_url        => "${ipaddr}:6017",
 }
 openiosds::zookeeper {'zookeeper-1':
   num       => '1',
@@ -26,11 +27,13 @@ openiosds::account {'account-1':
 openiosds::conscience {'conscience-1':
   num                   => '1',
   ns                    => 'OPENIO',
-  service_update_policy => 'meta2=KEEP|3|1|;rdir=KEEP|1|1|user_is_a_service=1',
-  storage_policy        => 'UNSAFETHREECOPIES',
-  meta2_max_versions    => '0',
   ipaddress             => $ipaddr,
   port                  => '6000',
+  service_update_policy => {'meta2'=>'KEEP|3|1|','sqlx'=>'KEEP|3|1|','rdir'=>'KEEP|1|1|user_is_a_service=rawx'},
+  storage_policy        => 'UNSAFETHREECOPIES',
+  storage_policies      => {'SINGLE'=>'NONE:NONE','TWOCOPIES'=>'NONE:DUPONETWO','THREECOPIES'=>'NONE:DUPONETHREE','ERASURECODE'=>'NONE:ERASURECODE','UNSAFETHREECOPIES'=>'UNSAFETHREECOPIES:DUPZEROTHREE'},
+  data_security         => {'DUPONETWO'=>'plain/distance=1,nb_copy=2','DUPONETHREE'=>'plain/distance=1,nb_copy=3','ERASURECODE'=>'ec/k=6,m=3,algo=liberasurecode_rs_vand,distance=1','DUPZEROTHREE'=>'plain/distance=0,nb_copy=3'},
+  pools                 => {'UNSAFETHREECOPIES'=>{'targets'=>'3,rawx','mask'=>'FFFFFFFFFFFFFFFF'}},
 }
 openiosds::meta0 {'meta0-1':
   num       => '1',
@@ -175,4 +178,10 @@ openiosds::beanstalkd {'beanstalkd-1':
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6014',
+}
+openiosds::ecd {'ecd-1':
+  num       => '1',
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => '6017',
 }
