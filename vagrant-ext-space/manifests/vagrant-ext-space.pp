@@ -7,19 +7,29 @@ openiosds::namespace {'OPENIO':
   oioproxy_url   => "VAGRANT_MAIN_VM:6006",
   eventagent_url => "beanstalk://VAGRANT_MAIN_VM:6014",
 }
-openiosds::conscienceagent {'conscienceagent-1':
-  num => '1',
-  ns  => 'OPENIO',
+openiosds::conscienceagent {'conscienceagent-4':
+  num       => 4,
+  ns        => 'OPENIO',
 }
 openiosds::meta2 {'meta2-4':
-  num            => '4',
-  ns             => 'OPENIO',
-  ipaddress      => "${ipaddr}",
-  port           => "6000",
+  num       => 4,
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => 6000,
 }
 openiosds::rawx {'rawx-4':
-  num            => '4',
-  ns             => 'OPENIO',
-  ipaddress      => "${ipaddr}",
-  port           => "6001",
+  num       => 4,
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => 6001,
+}
+openiosds::rdir {'rdir-4':
+  num       => 4,
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+  port      => 6010,
+}
+openiosds::oioblobindexer {'oio-blob-indexer-rawx-4':
+  num => 4,
+  ns  => 'OPENIO',
 }

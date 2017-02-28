@@ -14,7 +14,6 @@ openiosds::zookeeper {'zookeeper-1':
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
   port      => '6005',
-  bootstrap => true,
 }
 openiosds::account {'account-1':
   num        => '1',

@@ -40,5 +40,32 @@ echo "> Bootstrapping directory ..."
 echo "> Restarting directory services ..."
 $GRIDINITCMD restart @meta0 @meta1
 
+### Client
 # Install swift client
 /usr/bin/yum -yq install python-swiftclient
+
+## Install client configuration
+# OpenIO SDS
+echo "OIO_NS=OPENIO
+OIO_ACCOUNT=DEFAULT
+export OIO_NS OIO_ACCOUNT" \
+  >~openio/openiorc_default
+# OpenStack Swift
+echo "export OS_TENANT_NAME=demo
+export OS_USERNAME=demo
+export OS_PASSWORD=DEMO_PASS
+export OS_AUTH_URL=http://localhost:5000/v2.0" \
+  >~openio/keystonerc_demo
+# AWS S3
+mkdir ~openio/.aws
+echo "[default]
+aws_access_key_id=ACCESS_KEY
+aws_secret_access_key=SECRET_KEY" \
+  >~openio/.aws/credentials
+echo "[default]
+s3 =
+  max_concurrent_requests = 20
+  max_queue_size = 1000
+  multipart_threshold = 1GB
+  multipart_chunksize = 10MB" \
+  >~openio/.aws/config
