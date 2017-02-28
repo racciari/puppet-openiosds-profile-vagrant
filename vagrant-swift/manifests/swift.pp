@@ -123,12 +123,17 @@ openiosds::beanstalkd {'beanstalkd-0':
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
 }
-openiosds::oioswift {'oioswift-0':
-  ns            => 'OPENIO',
-  ipaddress     => '0.0.0.0',
-  sds_proxy_url => 'http://127.0.0.1:6006',
-}
 openiosds::ecd {'ecd-0':
+  ns        => 'OPENIO',
+  ipaddress => $ipaddr,
+}
+openiosds::oioswift {'oioswift-0':
+  ns               => 'OPENIO',
+  ipaddress        => '0.0.0.0',
+  sds_proxy_url    => 'http://127.0.0.1:6006',
+  memcache_servers => "${ipaddr}:6019",
+}
+openiosds::memcached {'memcached-0':
   ns        => 'OPENIO',
   ipaddress => $ipaddr,
 }
